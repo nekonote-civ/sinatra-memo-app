@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>個別メモページ</title>
+</head>
+<body>
+<header>
+  <h1>メモアプリ</h1>
+</header>
+<main>
+  <h2><%= @contents['title'] %></h2>
+  <pre><%= @contents['content'] %></pre>
+</main>
+<footer>
+  <button>変更</button>
+  <button>削除</button>
+</footer>
+</body>
+</html>
