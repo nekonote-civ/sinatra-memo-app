@@ -13,7 +13,7 @@
   <pre><%= @contents[:content] %></pre>
 </main>
 <footer>
-  <button>変更</button>
+  <button onclick="location.href='/memos/edit/<%= @contents[:id] %>'">変更</button>
   <button>削除</button>
 </footer>
 </body>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>メモ登録ページ</title>
+</head>
+<body>
+<header>
+  <h1>メモアプリ</h1>
+</header>
+<main>
+  <div class="container">
+    <form method="post" action="/memos">
+      <div class="form-items">
+        <div class="form--items__item">
+          <input type="text" name="title" id="title" value="<%= @contents[:title] %>">
+        </div>
+        <div class="form--items__item">
+          <textarea name="content" id="content" cols="30" rows="10"><%= @contents[:content] %></textarea>
+        </div>
+      </div>
+      <div class="form-action">
+        <input type="submit" value="保存">
+      </div>
+      <input type="hidden" name="_method" value="put">
+      <input type="hidden" name="id" value="<%= @contents[:id] %>">
+    </form>
+  </div>
+</main>
+</body>
+</html>

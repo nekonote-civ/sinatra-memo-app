@@ -44,15 +44,7 @@ def read_json_contents(memo_id)
   end
 end
 
-# メモ一覧画面
-get '/memos' do
-  @contents = read_all_json_contents
-  erb :memos
-end
-
-# メモ登録
-post '/memos' do
-  id = SecureRandom.uuid
+def json_contents_update(id)
   full_path = full_json_path("#{id}.json")
   File.open(full_path, 'w') do |file|
     json = {
@@ -61,10 +53,32 @@ post '/memos' do
     }
     JSON.dump(json, file)
   end
+end
+
+def json_contents_delete(id)
+  full_path = full_json_path("#{id}.json")
+  File.delete(full_path)
+end
+
+# メモ一覧画面
+get '/memos' do
+  @contents = read_all_json_contents
+  erb :memos
+end
+
+# メモ登録
+post '/memos' do
+  json_contents_update(SecureRandom.uuid)
   redirect '/memos'
 end
 
-# メモ追加画面
+# メモ更新
+put '/memos' do
+  json_contents_update(params[:id])
+  redirect '/memos'
+end
+
+# メモ登録画面
 get '/memos/new' do
   erb :new
 end
@@ -76,6 +90,7 @@ get '/memos/:memo_id' do
 end
 
 # メモ編集画面
-get '/edit/:memo_id' do
+get '/memos/edit/:memo_id' do
+  @contents = read_json_contents(params['memo_id'].to_s)
   erb :edit
 end
