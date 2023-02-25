@@ -2,29 +2,31 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>メモ登録ページ</title>
+  <link href="/css/edit.css" rel="stylesheet">
+  <title>メモ編集ページ</title>
 </head>
 <body>
-<header>
-  <h1>メモアプリ</h1>
-</header>
-<main>
-  <div class="container">
-    <form method="post" action="/memos/<%= @contents[:id] %>">
-      <div class="form-items">
-        <div class="form--items__item">
-          <input type="text" name="title" id="title" value="<%= ERB::Util.html_escape(@contents[:title]) %>">
-        </div>
-        <div class="form--items__item">
-          <textarea name="content" id="content" cols="30" rows="10"><%= ERB::Util.html_escape(@contents[:content]) %></textarea>
-        </div>
-      </div>
-      <div class="form-action">
-        <input type="submit" value="保存">
-      </div>
-      <input type="hidden" name="_method" value="patch">
-    </form>
+<div class="container">
+  <div class="container-header">
+    <div class="container-header__item">
+      <h1>メモアプリ</h1>
+    </div>
   </div>
-</main>
+  <form method="post" action="/memos/<%= @contents[:id] %>">
+    <div class="form-items">
+      <div class="form-items__item">
+        <input type="text" name="title" id="title" value="<%= ERB::Util.html_escape(@contents[:title]) %>">
+      </div>
+      <div class="form-items__item">
+        <textarea name="content" id="content" cols="30" rows="10"><%= ERB::Util.html_escape(@contents[:content]) %></textarea>
+      </div>
+    </div>
+    <div class="form-action">
+      <input type="submit" value="保存">
+    </div>
+    <input type="hidden" name="_method" value="patch">
+  </form>
+</div>
 </body>
 </html>
+
