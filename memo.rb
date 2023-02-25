@@ -4,8 +4,6 @@ require 'sinatra'
 require 'json'
 require 'securerandom'
 
-include ERB::Util
-
 BASE_STATIC_PATH = './public/'
 JSON_PATH = "#{BASE_STATIC_PATH}json/".freeze
 

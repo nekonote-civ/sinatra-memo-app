@@ -9,8 +9,8 @@
   <h1>メモアプリ</h1>
 </header>
 <main>
-  <h2><%= html_escape(@contents[:title]) %></h2>
-  <pre><%= html_escape(@contents[:content]) %></pre>
+  <h2><%= ERB::Util.html_escape(@contents[:title]) %></h2>
+  <pre><%= ERB::Util.html_escape(@contents[:content]) %></pre>
 </main>
 <form method="post">
   <button type="submit" name="_method" value="get" formaction="/memos/edit/<%= @contents[:id] %>">変更</button>
