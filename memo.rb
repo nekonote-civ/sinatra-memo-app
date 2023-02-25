@@ -22,7 +22,7 @@ def read_all_json_contents
   files.map do |file|
     full_path = full_json_path(file)
     File.open(full_path) do |open_file|
-      json = JSON.load(open_file)
+      json = JSON.parse(open_file.read)
       {
         id: file.split('.json')[0],
         title: json['title'],
@@ -37,7 +37,7 @@ def read_json_contents(memo_id)
   return unless File.exist?(full_path)
 
   File.open(full_path) do |open_file|
-    json = JSON.load(open_file)
+    json = JSON.parse(open_file.read)
     {
       id: memo_id,
       title: json['title'],
