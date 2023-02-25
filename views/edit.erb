@@ -10,7 +10,7 @@
 </header>
 <main>
   <div class="container">
-    <form method="post" action="/memos">
+    <form method="post" action="/memos/<%= @contents[:id] %>">
       <div class="form-items">
         <div class="form--items__item">
           <input type="text" name="title" id="title" value="<%= @contents[:title] %>">
@@ -23,7 +23,6 @@
         <input type="submit" value="保存">
       </div>
       <input type="hidden" name="_method" value="put">
-      <input type="hidden" name="id" value="<%= @contents[:id] %>">
     </form>
   </div>
 </main>

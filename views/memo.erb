@@ -12,9 +12,9 @@
   <h2><%= @contents[:title] %></h2>
   <pre><%= @contents[:content] %></pre>
 </main>
-<footer>
-  <button onclick="location.href='/memos/edit/<%= @contents[:id] %>'">変更</button>
-  <button>削除</button>
-</footer>
+<form method="post">
+  <button type="submit" name="_method" value="get" formaction="/memos/edit/<%= @contents[:id] %>">変更</button>
+  <button type="submit" name="_method" value="delete" formaction="/memos/<%= @contents[:id] %>">削除</button>
+</form>
 </body>
 </html>
