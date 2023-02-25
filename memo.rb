@@ -4,29 +4,42 @@ require 'sinatra'
 require 'json'
 
 BASE_STATIC_PATH = './public/'
+JSON_PATH = "#{BASE_STATIC_PATH}json/"
 
-def read_files
-  base_path = "#{BASE_STATIC_PATH}/json/"
-  Dir.glob('*.json', base: base_path)
+def full_json_path(file_name)
+  "#{JSON_PATH}#{file_name}"
+end
+
+def read_json_files
+  Dir.glob('*.json', base: JSON_PATH)
 end
 
 def read_all_json_contents
-  files = read_files
+  files = read_json_files
   files.map do |file|
-    full_path = "#{base_path}#{file}"
-    File.open(full_path) { |open_file| JSON.load(open_file) }
+    full_path = full_json_path(file)
+    File.open(full_path) do |open_file|
+      json = JSON.load(open_file)
+      {
+        :id => file.split('.json')[0],
+        :title => json['title'],
+        :content => json['content']
+      }
+    end
   end
 end
 
 def read_json_contents(memo_id)
-  files = read_files
-  files.each do |file|
-    full_path = "#{base_path}#{file}"
-    result_file = File.open(full_path) do |open_file|
-      json = JSON.load(open_file)
-      json if json['id'] == memo_id
-    end
-    return result_file if result_file
+  full_path = full_json_path("#{memo_id}.json")
+  return unless File.exist?(full_path)
+
+  File.open(full_path) do |open_file|
+    json = JSON.load(open_file)
+    {
+      :id => memo_id,
+      :title => json['title'],
+      :content => json['content']
+    }
   end
 end
 
@@ -43,7 +56,7 @@ end
 
 # メモ表示画面
 get '/memos/:memo_id' do
-  @contents = read_json_contents(params['memo_id'])
+  @contents = read_json_contents(params['memo_id'].to_s)
   erb :memo
 end
 
