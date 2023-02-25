@@ -73,7 +73,7 @@ post '/memos' do
 end
 
 # メモ更新
-put '/memos/:memo_id' do
+patch '/memos/:memo_id' do
   json_contents_update(params[:memo_id])
   redirect '/memos'
 end
