@@ -2,23 +2,34 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <link href="/css/memos.css" rel="stylesheet">
   <title>トップページ</title>
 </head>
 <body>
-<header>
-  <h1>メモアプリ</h1>
-  <button onclick="location.href='/memos/new'">追加</button>
-</header>
-<main>
-  <% if @contents.empty? %>
-    <p>登録済みのメモはありません。</p>
-  <% else %>
-    <ol>
-      <% @contents.each do |content| %>
-        <li><a href="memos/<%= content[:id] %>"><%= ERB::Util.html_escape(content[:title]) %></a></li>
-      <% end %>
-    </ol>
-  <% end %>
-</main>
+<div class="container">
+  <div class="container-header">
+    <div class="container-header__item">
+      <h1>メモアプリ</h1>
+    </div>
+    <div class="container-header__item">
+      <button onclick="location.href='/memos/new'">追加</button>
+    </div>
+  </div>
+  <div class="container-body">
+    <% if @contents.empty? %>
+      <div class="container-body__item">
+        <p>登録済みのメモはありません。</p>
+      </div>
+    <% else %>
+      <div class="container-body__item">
+        <ul>
+          <% @contents.each do |content| %>
+            <li><a href="memos/<%= content[:id] %>"><%= ERB::Util.html_escape(content[:title]) %></a></li>
+          <% end %>
+        </ul>
+    <% end %>
+    </div>
+  </div>
+</div>
 </body>
 </html>

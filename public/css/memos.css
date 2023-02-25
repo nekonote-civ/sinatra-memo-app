@@ -1,0 +1,38 @@
+.container {
+    margin: 0 auto;
+    max-width: 600px;
+    border: solid 1px #aaa;
+}
+
+.container-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.container-header__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 50px;
+}
+
+.container-header__item button {
+    padding: 10px 40px;
+    border: solid 1px #aaa;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.container-body__item p {
+    padding-left: 50px;
+}
+
+.container-body__item ul {
+    margin-left: 36px;
+    margin-bottom: 16px;
+}
+
+.container-body__item ul li {
+    font-size: 18px;
+    line-height: 1.8;
+}
