@@ -24,9 +24,9 @@ def read_all_json_contents
     File.open(full_path) do |open_file|
       json = JSON.load(open_file)
       {
-        :id => file.split('.json')[0],
-        :title => json['title'],
-        :content => json['content']
+        id: file.split('.json')[0],
+        title: json['title'],
+        content: json['content']
       }
     end
   end
@@ -39,9 +39,9 @@ def read_json_contents(memo_id)
   File.open(full_path) do |open_file|
     json = JSON.load(open_file)
     {
-      :id => memo_id,
-      :title => json['title'],
-      :content => json['content']
+      id: memo_id,
+      title: json['title'],
+      content: json['content']
     }
   end
 end
