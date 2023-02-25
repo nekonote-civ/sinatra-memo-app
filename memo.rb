@@ -2,6 +2,7 @@
 
 require 'sinatra'
 require 'json'
+require 'securerandom'
 
 BASE_STATIC_PATH = './public/'
 JSON_PATH = "#{BASE_STATIC_PATH}json/"
@@ -47,6 +48,20 @@ end
 get '/memos' do
   @contents = read_all_json_contents
   erb :memos
+end
+
+# メモ登録
+post '/memos' do
+  id = SecureRandom.uuid
+  full_path = full_json_path("#{id}.json")
+  File.open(full_path, 'w') do |file|
+    json = {
+      title: params[:title],
+      content: params[:content]
+    }
+    JSON.dump(json, file)
+  end
+  redirect '/memos'
 end
 
 # メモ追加画面
