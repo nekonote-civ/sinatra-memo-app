@@ -11,9 +11,3 @@
     outline-color: #9dbbff;
     vertical-align: middle;
 }
-
-.form-action {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
-}

@@ -24,6 +24,12 @@
     padding: 5px 50px;
 }
 
+.form-action {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
 .container-header__item button,
 .form-action input[type="submit"],
 .form-action button {
