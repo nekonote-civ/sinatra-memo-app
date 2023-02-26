@@ -4,7 +4,25 @@
   <meta charset="UTF-8">
   <link href="/css/common.css" rel="stylesheet">
   <link href="/css/edit.css" rel="stylesheet">
-  <title>メモ編集ページ</title>
+  <%
+    title = ''
+    action_url = ''
+    text_title = ''
+    text_content = ''
+    submit_button_name = ''
+    if @contents
+      title = 'メモ編集ページ'
+      action_url = "/memos/#{@contents[:id]}"
+      text_title = ERB::Util.html_escape(@contents[:title])
+      text_content = ERB::Util.html_escape(@contents[:content])
+      submit_button_name = '変更'
+    else
+      title = 'メモ登録ページ'
+      action_url = '/memos'
+      submit_button_name = '保存'
+    end
+  %>
+  <title><%= title %></title>
 </head>
 <body>
 <div class="container">
@@ -13,19 +31,21 @@
       <h1>メモアプリ</h1>
     </div>
   </div>
-  <form method="post" action="/memos/<%= @contents[:id] %>">
+  <form method="post" action="<%= action_url %>">
     <div class="form-items">
       <div class="form-items__item">
-        <input type="text" name="title" id="title" value="<%= ERB::Util.html_escape(@contents[:title]) %>">
+        <input type="text" name="title" id="title" value="<%= text_title %>">
       </div>
       <div class="form-items__item">
-        <textarea name="content" id="content" cols="30" rows="10"><%= ERB::Util.html_escape(@contents[:content]) %></textarea>
+        <textarea name="content" id="content" cols="30" rows="10"><%= text_content %></textarea>
       </div>
     </div>
     <div class="form-action">
-      <input type="submit" value="保存">
+      <input type="submit" value="<%= submit_button_name %>">
     </div>
-    <input type="hidden" name="_method" value="patch">
+    <% if @contents %>
+      <input type="hidden" name="_method" value="patch">
+    <% end %>
   </form>
 </div>
 </body>

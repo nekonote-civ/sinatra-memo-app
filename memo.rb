@@ -86,7 +86,7 @@ end
 
 # メモ登録画面
 get '/memos/new' do
-  erb :new
+  erb :edit
 end
 
 # メモ表示画面
