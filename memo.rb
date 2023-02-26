@@ -92,11 +92,18 @@ end
 # メモ表示画面
 get '/memos/:memo_id' do
   @contents = read_json_contents(params['memo_id'].to_s)
+  redirect not_found unless @contents
   erb :memo
 end
 
 # メモ編集画面
 get '/memos/edit/:memo_id' do
   @contents = read_json_contents(params['memo_id'].to_s)
+  redirect not_found unless @contents
   erb :edit
+end
+
+# 404 Not Found
+not_found do
+  erb :not_found
 end
