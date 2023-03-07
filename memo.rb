@@ -19,14 +19,12 @@ def read_all_json_contents
   files = read_json_files
   files.map do |file|
     full_path = full_json_path(file)
-    File.open(full_path) do |open_file|
-      json = JSON.parse(open_file.read)
-      {
-        id: file.split('.json')[0],
-        title: json['title'],
-        content: json['content']
-      }
-    end
+    json = JSON.parse(File.read(full_path))
+    {
+      id: file.split('.json')[0],
+      title: json['title'],
+      content: json['content']
+    }
   end
 end
 
@@ -34,14 +32,12 @@ def read_json_contents(memo_id)
   full_path = full_json_path("#{memo_id}.json")
   return unless File.exist?(full_path)
 
-  File.open(full_path) do |open_file|
-    json = JSON.parse(open_file.read)
-    {
-      id: memo_id,
-      title: json['title'],
-      content: json['content']
-    }
-  end
+  json = JSON.parse(File.read(full_path))
+  {
+    id: memo_id,
+    title: json['title'],
+    content: json['content']
+  }
 end
 
 def json_contents_update(id)
