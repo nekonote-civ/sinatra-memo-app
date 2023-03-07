@@ -8,7 +8,7 @@ BASE_STATIC_PATH = './public/'
 JSON_PATH = "#{BASE_STATIC_PATH}json/"
 
 def full_json_path(file_name)
-  "#{JSON_PATH}#{file_name}"
+  "#{JSON_PATH}#{File.basename(file_name)}"
 end
 
 def read_json_files
