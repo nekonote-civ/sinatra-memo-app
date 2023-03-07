@@ -27,18 +27,18 @@ end
 def read_json(id, path)
   json = JSON.parse(File.read(path))
   {
-    id: id,
+    id:,
     title: json['title'],
     content: json['content']
   }
 end
 
-def update_json_contents(id)
+def update_json_contents(id, title, content)
   full_path = full_json_path("#{id}.json")
   File.open(full_path, 'w') do |file|
     json = {
-      title: params[:title],
-      content: params[:content]
+      title:,
+      content:
     }
     JSON.dump(json, file)
   end
@@ -59,13 +59,13 @@ end
 
 # メモ登録
 post '/memos' do
-  update_json_contents(SecureRandom.uuid)
+  update_json_contents(SecureRandom.uuid, params[:title], params[:content])
   redirect '/memos'
 end
 
 # メモ更新
 patch '/memos/:memo_id' do
-  update_json_contents(params[:memo_id])
+  update_json_contents(params[:memo_id], params[:title], params[:content])
   redirect '/memos'
 end
 
