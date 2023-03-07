@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link href="/css/common.css" rel="stylesheet">
+  <% case @page %>
+  <% when 'memos' %>
+    <link href="/css/memos.css" rel="stylesheet">
+  <% when 'memo' %>
+    <link href="/css/memo.css" rel="stylesheet">
+  <% when 'edit', 'new' %>
+    <link href="/css/edit.css" rel="stylesheet">
+  <% end %>
+  <title><%= @title %></title>
+</head>
+<body>
+<div class="container">
+  <%= yield %>
+</div>
+</body>
+</html>
