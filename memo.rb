@@ -21,7 +21,7 @@ def read_all_json_contents
     full_path = full_json_path(file)
     json = JSON.parse(File.read(full_path))
     {
-      id: file.split('.json')[0],
+      id: File.basename(file, '.json'),
       title: json['title'],
       content: json['content']
     }
