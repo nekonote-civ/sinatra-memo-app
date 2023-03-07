@@ -34,8 +34,7 @@ def read_json(id, path)
 end
 
 def update_json_contents(id, title, content)
-  full_path = full_json_path("#{id}.json")
-  File.open(full_path, 'w') do |file|
+  File.open(full_json_path("#{id}.json"), 'w') do |file|
     json = {
       title:,
       content:
@@ -45,8 +44,7 @@ def update_json_contents(id, title, content)
 end
 
 def delete_json_contents(id)
-  full_path = full_json_path("#{id}.json")
-  File.delete(full_path)
+  File.delete(full_json_path("#{id}.json"))
 end
 
 # メモ一覧画面
