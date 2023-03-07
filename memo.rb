@@ -33,7 +33,7 @@ def read_json(id, path)
   }
 end
 
-def json_contents_update(id)
+def update_json_contents(id)
   full_path = full_json_path("#{id}.json")
   File.open(full_path, 'w') do |file|
     json = {
@@ -44,7 +44,7 @@ def json_contents_update(id)
   end
 end
 
-def json_contents_delete(id)
+def delete_json_contents(id)
   full_path = full_json_path("#{id}.json")
   File.delete(full_path)
 end
@@ -59,19 +59,19 @@ end
 
 # メモ登録
 post '/memos' do
-  json_contents_update(SecureRandom.uuid)
+  update_json_contents(SecureRandom.uuid)
   redirect '/memos'
 end
 
 # メモ更新
 patch '/memos/:memo_id' do
-  json_contents_update(params[:memo_id])
+  update_json_contents(params[:memo_id])
   redirect '/memos'
 end
 
 # メモ削除
 delete '/memos/:memo_id' do
-  json_contents_delete(params[:memo_id])
+  delete_json_contents(params[:memo_id])
   redirect '/memos'
 end
 
