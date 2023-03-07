@@ -16,25 +16,18 @@ def read_json_files
 end
 
 def read_all_json_contents
-  files = read_json_files
-  files.map do |file|
-    full_path = full_json_path(file)
-    json = JSON.parse(File.read(full_path))
-    {
-      id: File.basename(file, '.json'),
-      title: json['title'],
-      content: json['content']
-    }
-  end
+  read_json_files.map { |file| read_json(File.basename(file, '.json'), full_json_path(file)) }
 end
 
-def read_json_contents(memo_id)
-  full_path = full_json_path("#{memo_id}.json")
-  return unless File.exist?(full_path)
+def read_json_contents(id)
+  full_path = full_json_path("#{id}.json")
+  File.exist?(full_path) ? read_json(id, full_path) : nil
+end
 
-  json = JSON.parse(File.read(full_path))
+def read_json(id, path)
+  json = JSON.parse(File.read(path))
   {
-    id: memo_id,
+    id: id,
     title: json['title'],
     content: json['content']
   }
