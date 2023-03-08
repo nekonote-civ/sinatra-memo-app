@@ -76,10 +76,6 @@ end
 # メモ登録画面
 get '/memos/new' do
   @title = 'メモ登録ページ'
-  @action_url = '/memos'
-  @text_title = ''
-  @text_content = ''
-  @submit_button_name = '保存'
   @page = 'new'
   erb :edit
 end
@@ -96,14 +92,9 @@ end
 # メモ編集画面
 get '/memos/edit/:memo_id' do
   @title = 'メモ編集ページ'
-  @submit_button_name = '変更'
   @page = 'edit'
   @contents = read_json_contents(params['memo_id'].to_s)
   redirect not_found unless @contents
-
-  @action_url = "/memos/#{@contents[:id]}"
-  @text_title = ERB::Util.html_escape(@contents[:title])
-  @text_content = ERB::Util.html_escape(@contents[:content])
   erb :edit
 end
 
