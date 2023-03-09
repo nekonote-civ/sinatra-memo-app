@@ -19,6 +19,8 @@ class Memo
 
   def select_contents(id)
     @connection.exec_params('select id, title, content from memos where id = $1', [id])
+  rescue PG::InvalidTextRepresentation
+    nil
   end
 
   def create_contents(title, content)
@@ -27,10 +29,14 @@ class Memo
 
   def update_contents(title, content, id)
     @connection.exec_params('update memos set title = $1, content = $2 where id = $3', [title, content, id])
+  rescue PG::InvalidTextRepresentation
+    nil
   end
 
   def delete_contents(id)
     @connection.exec_params('delete from memos where id = $1', [id])
+  rescue PG::InvalidTextRepresentation
+    nil
   end
 end
 
@@ -74,7 +80,7 @@ get '/memos/:memo_id' do
   @title = '個別メモページ'
   @page = 'memo'
   @contents = memo.select_contents(params['memo_id'])
-  redirect not_found if @contents.ntuples.zero?
+  redirect not_found unless @contents
   @contents = @contents[0]
   erb :memo
 end
@@ -84,7 +90,7 @@ get '/memos/edit/:memo_id' do
   @title = 'メモ編集ページ'
   @page = 'edit'
   @contents = memo.select_contents(params['memo_id'])
-  redirect not_found if @contents.ntuples.zero?
+  redirect not_found unless @contents
   @contents = @contents[0]
   erb :edit
 end
