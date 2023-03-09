@@ -1,75 +1,60 @@
 # frozen_string_literal: true
 
 require 'sinatra'
-require 'json'
 require 'securerandom'
+require 'pg'
 
-BASE_STATIC_PATH = './public/'
-JSON_PATH = "#{BASE_STATIC_PATH}json/"
+class Memo
+  def initialize
+    @connection = PG.connect(dbname: 'memo_app')
+  end
 
-def full_json_path(file_name)
-  "#{JSON_PATH}#{File.basename(file_name)}"
-end
+  def select_all_contents
+    @connection.exec('select id, title, content from memos')
+  end
 
-def read_json_files
-  Dir.glob('*.json', base: JSON_PATH)
-end
+  def select_contents(id)
+    @connection.exec_params('select id, title, content from memos where id = $1', [id])
+  end
 
-def read_all_json_contents
-  read_json_files.map { |file| read_json(File.basename(file, '.json'), full_json_path(file)) }
-end
+  def create_contents(title, content)
+    @connection.exec_params('insert into memos(id, title, content) values(gen_random_uuid(), $1, $2)', [title, content])
+  end
 
-def read_json_contents(id)
-  full_path = full_json_path("#{id}.json")
-  File.exist?(full_path) ? read_json(id, full_path) : nil
-end
+  def update_contents(title, content, id)
+    @connection.exec_params('update memos set title = $1, content = $2 where id = $3', [title, content, id])
+  end
 
-def read_json(id, path)
-  json = JSON.parse(File.read(path))
-  {
-    id:,
-    title: json['title'],
-    content: json['content']
-  }
-end
-
-def update_json_contents(id, title, content)
-  File.open(full_json_path("#{id}.json"), 'w') do |file|
-    json = {
-      title:,
-      content:
-    }
-    JSON.dump(json, file)
+  def delete_contents(id)
+    @connection.exec_params('delete from memos where id = $1', [id])
   end
 end
 
-def delete_json_contents(id)
-  File.delete(full_json_path("#{id}.json"))
-end
+memo = Memo.new
 
 # メモ一覧画面
 get '/memos' do
   @title = 'トップページ'
   @page = 'memos'
-  @contents = read_all_json_contents
+  @contents = memo.select_all_contents
   erb :memos
 end
 
 # メモ登録
 post '/memos' do
-  update_json_contents(SecureRandom.uuid, params[:title], params[:content])
+  memo.create_contents(params[:title], params[:content])
   redirect '/memos'
 end
 
 # メモ更新
 patch '/memos/:memo_id' do
-  update_json_contents(params[:memo_id], params[:title], params[:content])
+  memo.update_contents(params[:title], params[:content], params[:memo_id])
   redirect '/memos'
 end
 
 # メモ削除
 delete '/memos/:memo_id' do
-  delete_json_contents(params[:memo_id])
+  memo.delete_contents(params[:memo_id])
   redirect '/memos'
 end
 
@@ -84,8 +69,9 @@ end
 get '/memos/:memo_id' do
   @title = '個別メモページ'
   @page = 'memo'
-  @contents = read_json_contents(params['memo_id'].to_s)
-  redirect not_found unless @contents
+  @contents = memo.select_contents(params['memo_id'])
+  redirect not_found if @contents.ntuples.zero?
+  @contents = @contents[0]
   erb :memo
 end
 
@@ -93,8 +79,9 @@ end
 get '/memos/edit/:memo_id' do
   @title = 'メモ編集ページ'
   @page = 'edit'
-  @contents = read_json_contents(params['memo_id'].to_s)
-  redirect not_found unless @contents
+  @contents = memo.select_contents(params['memo_id'])
+  redirect not_found if @contents.ntuples.zero?
+  @contents = @contents[0]
   erb :edit
 end
 
