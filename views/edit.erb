@@ -3,13 +3,13 @@
     <h1>メモアプリ</h1>
   </div>
 </div>
-<form method="post" action="<%= @contents ? "/memos/#{@contents[:id]}" : '/memos' %>">
+<form method="post" action="<%= @contents ? "/memos/#{@contents['id']}" : '/memos' %>">
   <div class="form-items">
     <div class="form-items__item">
-      <input type="text" name="title" id="title" value="<%= @contents ? ERB::Util.html_escape(@contents[:title]) : '' %>">
+      <input type="text" name="title" id="title" value="<%= @contents ? ERB::Util.html_escape(@contents['title']) : '' %>">
     </div>
     <div class="form-items__item">
-      <textarea name="content" id="content" cols="30" rows="10"><%= @contents ? ERB::Util.html_escape(@contents[:content]) : '' %></textarea>
+      <textarea name="content" id="content" cols="30" rows="10"><%= @contents ? ERB::Util.html_escape(@contents['content']) : '' %></textarea>
     </div>
   </div>
   <div class="form-action">
