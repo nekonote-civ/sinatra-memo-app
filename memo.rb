@@ -6,7 +6,11 @@ require 'pg'
 
 class Memo
   def initialize
-    @connection = PG.connect(dbname: 'memo_app')
+    host = 'localhost'
+    dbname = 'memo_app'
+    user = 'memo_user'
+    password = 'memo_user_pass'
+    @connection = PG.connect(host:, dbname:, user:, password:)
   end
 
   def select_all_contents
