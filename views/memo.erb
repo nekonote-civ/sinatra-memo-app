@@ -5,19 +5,19 @@
 </div>
 <div class="container-body">
   <div class="container-body__item">
-    <h2><%= ERB::Util.html_escape(@contents[:title]) %></h2>
+    <h2><%= ERB::Util.html_escape(@contents['title']) %></h2>
   </div>
   <div class="container-body__item">
-    <pre><%= ERB::Util.html_escape(@contents[:content]) %></pre>
+    <pre><%= ERB::Util.html_escape(@contents['content']) %></pre>
   </div>
 </div>
 <form method="post">
   <div class="form-action">
     <div class="form-action__item">
-      <button type="submit" name="_method" value="get" formaction="/memos/edit/<%= @contents[:id] %>">変更</button>
+      <button type="submit" name="_method" value="get" formaction="/memos/edit/<%= @contents['id'] %>">変更</button>
     </div>
     <div class="form-action__item">
-      <button type="submit" name="_method" value="delete" formaction="/memos/<%= @contents[:id] %>">削除</button>
+      <button type="submit" name="_method" value="delete" formaction="/memos/<%= @contents['id'] %>">削除</button>
     </div>
   </div>
 </form>

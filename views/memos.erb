@@ -7,7 +7,7 @@
   </div>
 </div>
 <div class="container-body">
-  <% if @contents.empty? %>
+  <% if @contents.ntuples.zero? %>
     <div class="container-body__item">
       <p>登録済みのメモはありません。</p>
     </div>
@@ -15,7 +15,7 @@
     <div class="container-body__item">
       <ul>
         <% @contents.each do |content| %>
-          <li><a href="memos/<%= content[:id] %>"><%= ERB::Util.html_escape(content[:title]) %></a></li>
+          <li><a href="memos/<%= content['id'] %>"><%= ERB::Util.html_escape(content['title']) %></a></li>
         <% end %>
       </ul>
   <% end %>
